@@ -1,0 +1,58 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Process</th>
+    <th>Wait Time</th>
+    <th>Turnaround Time</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <% @answers.each do |process| %>
+
+      <tr>
+        <th scope="row"><%= process.number %></th>
+        <td><%= process.wait_time %></td>
+        <td><%= process.turnaround_time %></td>
+      </tr>
+
+  <% end %>
+
+  </tbody>
+</table>
+
+<div id="example4.2" style="height: 200px;"></div>
+
+Average waiting time = <%= @average_wait_time %>
+<br>
+Average turnaround time = <%= @average_turnaround_time %>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load("current", {packages:["timeline"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var container = document.getElementById('example4.2');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({ type: 'string', id: 'Role' });
+        dataTable.addColumn({ type: 'string', id: 'Name' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        dataTable.addRows([
+
+            <% @answers.each do |process| %>
+
+              [ 'Process', '<%= process.number %>', new Date(0, 0, 0, 0, 0, <%= process.wait_time %>), new Date(0, 0, 0, 0, 0, <%= process.turnaround_time %>) ],
+
+            <% end %>
+        ]);
+
+        var options = {
+            timeline: { showRowLabels: false, groupByRowLabel: true }
+        };
+
+        chart.draw(dataTable, options);
+    }
+</script>

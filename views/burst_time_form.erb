@@ -1,0 +1,35 @@
+<form class="form-group" action="/compute" method="POST">
+
+  Process Arrival Time Burst Time Service Time
+
+  <fieldset class="form-group">
+    <legend>Process Type</legend>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="scheduler" value="SJF" checked>
+        Shortest job first
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="scheduler" value="FCFS">
+        First come first serve
+      </label>
+    </div>
+  </fieldset>
+
+  <% @processes.times do |process| %>
+
+      <fieldset>
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input type="hidden" name="process[][number]" value="<%= process %>">
+          <div class="input-group-addon"><%= process %></div>
+          <input type="text" class="form-control" placeholder="0" value="0" name="process[][arrival_time]">
+          <input type="text" class="form-control" placeholder="Burst Time" name="process[][burst_time]">
+        </div>
+      </fieldset>
+
+
+  <% end %>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
