@@ -1,5 +1,4 @@
 require 'sinatra'
-# require 'calculate'
 require_relative 'process_item.rb'
 require_relative 'calculate.rb'
 
@@ -30,7 +29,8 @@ post '/compute' do
   if params[:scheduler] == 'SJF'
     @answers = Calculate::ShortestJobfirst.perform(all_processes)
   else
-    @answers = Calculate::FirstComeFirstServe.perform(all_processes)
+    # @answers = Calculate::FirstComeFirstServe.perform(all_processes)
+    @answers = process
   end
 
   @average_wait_time = 0
